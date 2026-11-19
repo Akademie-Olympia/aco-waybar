@@ -4,7 +4,7 @@ pkgver=0.3.0
 pkgrel=1
 pkgdesc='Waybar panel configuration'
 arch=('any')
-url='https://github.com/MichaelWeissDEV/dotfiles'
+url='https://github.com/Akademie-Olympia/aco-dotfiles'
 license=('LicenseRef-arch-dotfiles-bundle')
 depends=('arch-dotfiles-core>=0.3.0' 'waybar' 'ttf-jetbrains-mono-nerd' 'libpulse' 'networkmanager' 'bluez-utils' 'power-profiles-daemon')
 optdepends=()
