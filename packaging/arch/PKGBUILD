@@ -1,13 +1,15 @@
 # Package-local recipe. Stage checksummed sources with packaging/arch/build.sh.
-pkgname=arch-dotfiles-waybar
+pkgname=aco-arch-dotfiles-waybar
 pkgver=0.3.0
 pkgrel=1
 pkgdesc='Waybar panel configuration'
 arch=('any')
-url='https://github.com/Akademie-Olympia/aco-dotfiles'
+url='https://github.com/Akademie-Olympia/aco-arch-dotfiles'
 license=('LicenseRef-arch-dotfiles-bundle')
-depends=('arch-dotfiles-core>=0.3.0' 'waybar' 'ttf-jetbrains-mono-nerd' 'libpulse' 'networkmanager' 'bluez-utils' 'power-profiles-daemon')
+depends=('aco-arch-dotfiles-core>=0.3.0' 'waybar' 'ttf-jetbrains-mono-nerd' 'libpulse' 'networkmanager' 'bluez-utils' 'power-profiles-daemon')
 optdepends=()
+replaces=('arch-dotfiles-waybar')
+conflicts=('arch-dotfiles-waybar')
 options=('!strip')
 source=('payload.tar.gz')
 sha256sums=('__SOURCE_SHA256__')
