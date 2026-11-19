@@ -2,7 +2,7 @@
 
 Wayland-Panel mit Desktop-, Audio-, Netzwerk- und Systemanzeigen.
 
-**[Vollständige Dokumentation](https://aco-arch-dotfiles.readthedocs.io/en/latest/waybar/)** ·
+**[Vollständige Dokumentation](https://aco-waybar.readthedocs.io/en/latest/)** ·
 [Komponenten](https://aco-arch-dotfiles.readthedocs.io/en/latest/components/#waybar) ·
 [Installation und Updates](https://aco-arch-dotfiles.readthedocs.io/en/latest/arch-package/)
 
