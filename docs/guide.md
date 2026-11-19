@@ -1,72 +1,98 @@
-# Waybar Status Bar
+# Waybar im Alltag
 
-Waybar provides the top desktop panel for the [Hyprland](https://aco-hypr.readthedocs.io/en/latest/guide/) session, offering at-a-glance telemetry, workspace state, audio controls, and an integrated system power menu.
+Waybar ist die schmale Leiste am oberen Bildschirmrand der Hyprland-Sitzung. Sie zeigt nur, was man dauernd braucht –
+Workspace, Uhrzeit, Lautstärke, Akku – und bietet ein Power-Menü. Alles andere (Programme starten, Fenster wechseln,
+Hintergrund wählen) liegt bewusst **nicht** in der Leiste, sondern auf Tastenkürzeln und im [Fuzzel](https://aco-fuzzel.readthedocs.io/en/latest/)-Menü.
 
----
-
-## Panel Layout
+## Aufbau
 
 ```text
-┌──────────────────────────────────┬──────────────┬──────────────────────────────────┐
-│  1 2 3 4 5  Window Title          │  14:32:05    │  󰕾 65%  󰂀 82%  󰤨 WiFi  󰐥   │
-└──────────────────────────────────┴──────────────┴──────────────────────────────────┘
-  (Workspaces / Title)               (Clock)        (Audio / Battery / Net / Power)
+┌───────────────┬──────────────────────┬─────────────────────────────┐
+│ 1 2 3 4 5 …   │  14:32  ·  19.11.2026 │  󰕾 65%    󰂀 82%    󰐥      │
+└───────────────┴──────────────────────┴─────────────────────────────┘
+  links            Mitte                  rechts
 ```
 
-The panel is configured across three primary sectors:
+| Bereich | Modul | Funktion |
+| --- | --- | --- |
+| Links | `hyprland/workspaces` | Workspaces des Monitors; Mausrad wechselt, aktiver Workspace blau unterstrichen, dringende rot |
+| Mitte | `clock` | `HH:MM · TT.MM.JJJJ`, Kalender im Tooltip (Maus darüber halten) |
+| Rechts | `wireplumber` | Lautstärke; Klick = stumm, Mausrad ±2 % (höchstens 100 %) |
+| Rechts | `battery` | Ladestand mit Symbolen, Tooltip mit Restzeit und Leistung in Watt |
+| Rechts | `custom/power` | Power-Menü (siehe unten) |
 
-### 1. Left Sector
-- **Workspaces (`hyprland/workspaces`)**: Visual indicator of active and occupied workspaces with distinct pastel highlighting for the currently focused monitor.
-- **Active Window Title (`hyprland/window`)**: Truncated title of the focused application.
+Höhe 26 px, oben, ohne Abstand zum Rand. Die Leiste erscheint auf **jedem** Monitor; `all-outputs` ist aus, deshalb zeigt jeder
+Monitor seine eigenen Workspaces.
 
-> The application launcher and wallpaper selector are intentionally **not** in Waybar. Start the launcher with <kbd>Super</kbd> + <kbd>Space</kbd> (or <kbd>Super</kbd> + <kbd>D</kbd>) and the wallpaper TUI with <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd> or the `wallpaper` command (see [Wallpaper Guide](https://aco-wallpaper.readthedocs.io/en/latest/)).
+### Akku-Zustände
 
-### 2. Center Sector
-- **Clock & Calendar**: Displays live 24-hour time and date (`HH:mm:ss · YYYY-MM-DD`). Clicking opens calendar info.
+`battery` nutzt `BAT0` und `AC`. Ab **25 %** färbt sich die Anzeige orange (`warning`), ab **12 %** rot (`critical`);
+beim Laden und im Netzbetrieb ist sie grün. Hat dein Gerät einen anderen Akkunamen (`ls /sys/class/power_supply`),
+ändere `"bat"` in `config.jsonc`.
 
-### 3. Right Sector
-- **Audio (`pulseaudio`)**: Volume percentage and mute indicator. Scroll to adjust volume; left-click to toggle mute; right-click to open audio mixer.
-- **Battery (`battery`)**: State of charge, remaining runtime, and charging status.
-- **Network (`network`)**: Wireless SSID, signal strength, or ethernet link speed. Right-click opens `nmtui` in a floating terminal.
-- **Power Menu (`󰐥`)**: System power controls.
+## Power-Menü
 
----
+Das Symbol `󰐥` rechts bietet zwei Wege:
 
-## Power Menu Integration
+1. **Linksklick** – GTK-Menü aus `power_menu.xml` direkt unter der Leiste: Herunterfahren, Neu starten, Standby, Sperren, Abmelden.
+2. **Rechtsklick** – das Fuzzel-Menü `powermenu.sh` aus dem Hyprland-Paket (auch auf {kbd}`Super + Esc`), bedienbar nur mit Tastatur.
 
-The power icon (`󰐥`) offers two interaction modes:
+Die Aktionen sind `systemctl poweroff|reboot|suspend`, `hyprlock` und `hyprctl dispatch 'hl.dsp.exit()'`.
+Die Leiste braucht dafür also **Hyprland und Hyprlock** – siehe [Aufbau und Abhängigkeiten](design).
 
-1. **Left-Click (GTK Menu)**:
-   Immediately renders a discrete popup menu (`power_menu.xml`) directly beneath the bar:
-   - `󰐥 Shutdown` (`systemctl poweroff`)
-   - `󰜉 Reboot` (`systemctl reboot`)
-   - `󰤄 Suspend` (`systemctl suspend`)
-   - `󰌾 Lock Screen` (`hyprlock`)
-   - `󰍃 Logout` (`hyprctl dispatch exit`)
+## Neu laden
 
-2. **Right-Click (Fuzzel Picker)**:
-   Launches the keyboard-driven menu (`powermenu.sh`) powered by `fuzzel`, allowing quick navigation with arrow keys and <kbd>Enter</kbd>. (Also accessible globally via <kbd>Super</kbd> + <kbd>Escape</kbd>; see [Hyprland Keybindings](https://aco-hypr.readthedocs.io/en/latest/guide/#application-launchers--system-controls)).
+Nach Änderungen an `config.jsonc` oder `style.css`:
 
----
+- {kbd}`Super + Shift + B` – sendet Waybar das Signal `SIGUSR2` (lädt Konfiguration und Stil neu); klappt das nicht, wird Waybar neu gestartet.
+- Im Terminal: `killall -SIGUSR2 waybar`
 
-## Reloading Waybar
+Fehler in der Konfiguration meldet `waybar` beim Start im Terminal (`waybar -l debug`).
 
-To reload Waybar after editing its styling or JSON configuration:
+## Aussehen (`style.css`)
 
-```bash
-# Via keybinding:
-Super + Shift + b
+Waybar nutzt GTK-CSS. Die Datei setzt Schrift (JetBrainsMono Nerd Font, 12 px), Catppuccin-Mocha-Farben und eckige Kanten
+(`border-radius: 0`). Jedes Modul hat eine CSS-ID (`#clock`, `#battery`, `#wireplumber`, `#custom-power`, `#workspaces button`);
+Zustände sind Klassen (`.active`, `.urgent`, `.muted`, `.charging`, `.warning`, `.critical`).
 
-# Via terminal:
-killall waybar && waybar &
+| Rolle | Farbe |
+| --- | --- |
+| Leistenhintergrund | `#1e1e2e` |
+| Modulfläche | `#181825` mit `#313244` als Trennlinie |
+| Lautstärke | `#74c7ec` (Sapphire), stumm `#6c7086` |
+| Akku | `#94e2d5` (Teal), laden `#a6e3a1`, warnen `#fab387`, kritisch `#f38ba8` |
+| Aktiver Workspace | `#89b4fa` |
+
+## Eigene Module ergänzen
+
+Die Leiste ist absichtlich klein. Ein Modul fügst du in zwei Schritten hinzu – etwa Netzwerk oder Fenstertitel:
+
+```javascript
+// ~/.config/waybar/config.jsonc
+"modules-left":  [ "hyprland/workspaces", "hyprland/window" ],
+"modules-right": [ "network", "wireplumber", "battery", "custom/power" ],
+
+"hyprland/window": { "max-length": 50 },
+"network": {
+    "format-wifi": "󰤨 {essid}",
+    "format-ethernet": "󰈀 {ipaddr}",
+    "format-disconnected": "󰤭",
+    "on-click": "kitty -e nmtui"
+}
 ```
 
----
+```css
+/* ~/.config/waybar/style.css */
+#network { padding: 0 10px; background-color: #181825; color: #94e2d5; border-left: 1px solid #313244; }
+```
 
-## Configuration Files
+Für `network` ist `networkmanager` nötig (steht schon in den Abhängigkeiten des Pakets), für Bluetooth `bluez-utils`.
+Alle Module erklärt `man waybar-<modul>`, z. B. `man waybar-network`.
 
-The Waybar configuration is stored in `~/.config/waybar/`:
+## Fehlersuche
 
-- **Main Configuration**: [`config.jsonc`](https://github.com/Akademie-Olympia/aco-waybar/blob/main/config.jsonc) — module definitions, layout sectors, formatting, and update intervals.
-- **Catppuccin Mocha Styling**: [`style.css`](https://github.com/Akademie-Olympia/aco-waybar/blob/main/style.css) — custom CSS styling with rounded pill geometry and pastel accents.
-- **Power Dropdown XML**: [`power_menu.xml`](https://github.com/Akademie-Olympia/aco-waybar/blob/main/power_menu.xml) — GTK menu definition for the power dropdown button.
+- **Leiste fehlt:** Wird Waybar von Hyprland gestartet? `pgrep -x waybar`; sonst {kbd}`Super + Shift + B`.
+- **Symbole als Kästchen:** `ttf-jetbrains-mono-nerd` fehlt.
+- **Lautstärke ohne Wirkung:** `wpctl status` muss einen Standard-Ausgang zeigen (PipeWire/WirePlumber).
+- **Akku fehlt:** `bat` passt nicht zum Gerät (siehe oben); auf Desktop-Rechnern das Modul aus `modules-right` entfernen.
+- **Workspace-Leiste leer:** Waybar läuft ohne Hyprland-Sitzung (`HYPRLAND_INSTANCE_SIGNATURE` fehlt).
