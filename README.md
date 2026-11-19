@@ -1,26 +1,28 @@
 # Waybar configuration
 
-Wayland-Panel mit Desktop-, Audio-, Netzwerk- und Systemanzeigen.
+Wayland panel with workspaces, clock, volume, battery and a power menu.
 
-**[Vollständige Dokumentation](https://aco-waybar.readthedocs.io/en/latest/)** ·
-[Komponenten](https://aco-arch-dotfiles.readthedocs.io/en/latest/components/#waybar) ·
-[Installation und Updates](https://aco-arch-dotfiles.readthedocs.io/en/latest/arch-package/)
+**[Documentation](https://aco-docs.readthedocs.io/en/latest/waybar/)** ·
+[Guide](https://aco-docs.readthedocs.io/en/latest/waybar/guide/) ·
+[Design & dependencies](https://aco-docs.readthedocs.io/en/latest/waybar/design/) ·
+[Installation and updates](https://aco-arch-dotfiles.readthedocs.io/en/latest/arch-package/)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Akademie-Olympia/aco-arch-dotfiles/main/install.sh | bash -s -- waybar
 ```
 
-Paket: `aco-arch-dotfiles-waybar`. Dateien: `~/.config/waybar/config.jsonc`, `style.css`
-und `power_menu.xml`. Module, Bedienung und Anpassungen sind im Handbuch beschrieben.
-Quellen hier pflegen und auf `main` pushen; nach erfolgreichem Registry-Build mit
-`sudo pacman -Syu` aktualisieren. [PACKAGING.md](PACKAGING.md).
+Package: `aco-arch-dotfiles-waybar`. This standalone repository holds the development sources and the package recipe in
+`packaging/arch/PKGBUILD`. The documentation of this component lives in the shared
+[aco-docs](https://github.com/Akademie-Olympia/aco-docs) repository (one Read the Docs project for all small components).
+Push to `main`; after a successful registry build update with `sudo pacman -Syu`. Details and local builds: [PACKAGING.md](PACKAGING.md).
 
-### Anpassung
+### Customisation
 
-Die Module stehen in `config.jsonc`, ihre Darstellung in `style.css`; `power_menu.xml` beschreibt das Power-Menü. Nach Änderungen Waybar neu laden; weitere Hinweise und Tasten stehen in der verlinkten Dokumentation.
+Modules live in `config.jsonc`, their look in `style.css`; `power_menu.xml` describes the power menu. Reload Waybar after changes (`Super + Shift + B`).
 
-Eigene Änderungen in der aktivierten Benutzerkopie bleiben bei der Synchronisierung erhalten; neue abweichende Vorgaben erscheinen als `.pacnew`. Siehe [Update und Wiederherstellung](https://aco-arch-dotfiles.readthedocs.io/en/latest/verification/).
+Your own changes in the activated user copy survive synchronisation; new differing defaults appear as `.pacnew`.
+See [update and recovery](https://aco-arch-dotfiles.readthedocs.io/en/latest/verification/).
 
 [![Package safety](https://github.com/Akademie-Olympia/aco-waybar/actions/workflows/package.yml/badge.svg)](https://github.com/Akademie-Olympia/aco-waybar/actions/workflows/package.yml)
 
-[MIT-Lizenz](LICENSE).
+[MIT licence](LICENSE).

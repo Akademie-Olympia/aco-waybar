@@ -6,8 +6,8 @@ pkgdesc='Waybar panel configuration'
 arch=('any')
 url='https://github.com/Akademie-Olympia/aco-arch-dotfiles'
 license=('LicenseRef-arch-dotfiles-bundle')
-depends=('aco-arch-dotfiles-core>=0.3.0' 'waybar' 'ttf-jetbrains-mono-nerd' 'libpulse' 'networkmanager' 'bluez-utils' 'power-profiles-daemon')
-optdepends=()
+depends=('aco-arch-dotfiles-core>=0.3.0' 'waybar' 'ttf-jetbrains-mono-nerd' 'wireplumber' 'hyprland' 'hyprlock')
+optdepends=('networkmanager: network module and nmtui' 'bluez-utils: bluetooth module' 'power-profiles-daemon: power-profiles module')
 replaces=('arch-dotfiles-waybar')
 conflicts=('arch-dotfiles-waybar')
 options=('!strip')
