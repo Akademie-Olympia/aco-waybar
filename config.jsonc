@@ -1,7 +1,8 @@
 // ============================================================================
 // WAYBAR - ACO top bar
-// Left: workspace circles and the focused app. Right: status icons that only
-// appear when they matter, the clock and the control centre.
+// Like the macOS menu bar. Left: workspace circles and the focused app.
+// Right: status symbols that only appear when they matter, the clock (opens
+// the notification centre) and the control centre.
 // Layout only; colours and fonts come from aco-theme via style.css.
 // ============================================================================
 {
@@ -11,7 +12,7 @@
     "spacing": 0,
 
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-right": ["tray", "privacy", "bluetooth", "network", "wireplumber", "backlight", "battery", "clock", "custom/control-centre"],
+    "modules-right": ["tray", "privacy", "custom/notifications", "bluetooth", "wireplumber", "backlight", "battery", "network", "custom/control-centre", "clock"],
 
     "hyprland/window": {
         "format": "{class}",
@@ -112,27 +113,35 @@
         "format": "{:%a %d. %b  %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "interval": 15,
-        "on-click": "swaync-client -t -sw"
+        "on-click": "~/.config/swaync/panel.sh notifications"
     },
 
-    "custom/control-centre": {
+    // Only visible while notifications wait or "Nicht stören" is on.
+    "custom/notifications": {
         "format": "{icon}",
         "format-icons": {
             "notification": "󰂚",
-            "none": "󰕮",
+            "none": "",
             "dnd-notification": "󰂛",
             "dnd-none": "󰂛",
             "inhibited-notification": "󰂚",
-            "inhibited-none": "󰕮",
+            "inhibited-none": "",
             "dnd-inhibited-notification": "󰂛",
             "dnd-inhibited-none": "󰂛"
         },
-        "tooltip-format": "Kontrollzentrum (Rechtsklick: Nicht stören)",
+        "tooltip-format": "Mitteilungen (Rechtsklick: Nicht stören)",
         "return-type": "json",
         "exec-if": "command -v swaync-client",
         "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
+        "on-click": "~/.config/swaync/panel.sh notifications",
         "on-click-right": "swaync-client -d -sw",
         "escape": true
+    },
+
+    // Compact control centre below the bar, like on a Mac.
+    "custom/control-centre": {
+        "format": "󰔡",
+        "tooltip-format": "Kontrollzentrum",
+        "on-click": "~/.config/swaync/panel.sh control"
     }
 }

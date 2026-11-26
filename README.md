@@ -1,16 +1,19 @@
 # Waybar configuration
 
-A quiet top bar: workspace circles and the focused app on the left; on the right only status icons that matter
-(network, sound, brightness and battery on laptops, Bluetooth while connected, an orange dot while the microphone
-or screen sharing is in use), the clock and the control centre button.
+A quiet top bar in the spirit of the macOS menu bar: one colour for every symbol, no frames, only what matters.
+Left: workspace circles and the focused app. Right: tray, an orange dot while the microphone or screen sharing is in
+use, a bell only while notifications wait, Bluetooth while connected, volume, brightness and battery on laptops,
+network, the control centre switch and the clock.
 
-- **Workspaces** are circles, one per workspace of the monitor the bar sits on; the one on screen is filled (accent
-  on the focused monitor, grey elsewhere). Click to switch, scroll to step through the monitor's workspaces.
-  Grouping per monitor and the "all monitors" mode come from `workspaces.lua` in aco-hypr.
-- **Transparent**: with `aco-theme transparency on` the bar has no background and floats over the wallpaper; with
-  `off` it is a solid strip (`bar_opacity` in aco-theme).
-- **Clicks**: network, Bluetooth, battery and right click on the volume open their page in the settings hub;
-  the clock and the bell open the control centre (aco-swaync), which also holds lock and power off.
+- **Text and tint**: with `aco-theme transparency on` the bar floats over the wallpaper. The text is light or dark to
+  suit the wallpaper (`aco-theme bar text auto`, or always `light` / `dark`), and an optional tint sits behind it
+  (`aco-theme bar opacity 0..1`). Both are in *Einstellungen > Erscheinungsbild > Menüleiste*. With transparency off
+  the bar is a solid strip in the normal colours.
+- **Workspaces** are circles, one per workspace of the monitor the bar sits on; the one on screen is filled (fully on
+  the focused monitor, half on the others). Click to switch, scroll to step. Grouping per monitor and the "all
+  monitors" mode come from `workspaces.lua` in aco-hypr.
+- **Clicks**: the switch icon opens the control centre, the clock and the bell the notification centre (aco-swaync);
+  network, Bluetooth, battery and a right click on the volume open their page in the settings hub.
 
 **[Documentation](https://aco-docs.readthedocs.io/en/latest/waybar/)** ·
 [Guide](https://aco-docs.readthedocs.io/en/latest/waybar/guide/) ·
