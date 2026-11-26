@@ -29,6 +29,7 @@
             "org.kde.dolphin": "Dateien",
             "io.github.celluloid_player.Celluloid": "Celluloid",
             "io.bassi.Amberol": "Musik",
+            "org.aco.Settings": "Einstellungen",
             "com.gabm.satty": "Screenshot"
         }
     },
@@ -63,7 +64,7 @@
         "tooltip-format-wifi": "{essid} · {signalStrength}%",
         "tooltip-format-ethernet": "{ifname} · {ipaddr}",
         "tooltip-format-disconnected": "Nicht verbunden",
-        "on-click": "~/.config/hypr/settings.sh wifi"
+        "on-click": "aco-settings network"
     },
 
     "wireplumber": {
@@ -72,7 +73,7 @@
         "format-icons": ["󰕿", "󰖀", "󰕾"],
         "tooltip-format": "Lautstärke {volume}%",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-        "on-click-right": "~/.config/hypr/settings.sh sound",
+        "on-click-right": "aco-settings sound",
         "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
         "max-volume": 100
@@ -104,7 +105,7 @@
         "format-connected": "󰂱",
         "tooltip-format-connected": "{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}",
-        "on-click": "~/.config/hypr/settings.sh bluetooth"
+        "on-click": "aco-settings bluetooth"
     },
 
     // Shows a dot while the microphone or screen sharing is in use.
