@@ -26,7 +26,9 @@
             "com.mitchellh.ghostty": "Terminal",
             "firefox": "Firefox",
             "obsidian": "Obsidian",
-            "pcmanfm": "Dateien",
+            "org.kde.dolphin": "Dateien",
+            "io.github.celluloid_player.Celluloid": "Celluloid",
+            "io.bassi.Amberol": "Musik",
             "com.gabm.satty": "Screenshot"
         }
     },
