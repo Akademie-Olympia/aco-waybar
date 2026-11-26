@@ -20,14 +20,14 @@
         "menu-file": "~/.config/waybar/power_menu.xml",
         "menu-actions": {
             "settings": "~/.config/hypr/settings.sh",
-            "appearance": "aco-theme menu",
+            "appearance": "~/.config/hypr/settings.sh appearance",
             "lock": "hyprlock",
             "logout": "hyprctl dispatch 'hl.dsp.exit()'",
             "suspend": "systemctl suspend",
             "reboot": "systemctl reboot",
             "shutdown": "systemctl poweroff"
         },
-        "on-click-right": "pkill -x fuzzel || fuzzel"
+        "on-click-right": "aco-menu apps"
     },
 
     "hyprland/window": {
@@ -121,6 +121,6 @@
         "format": "󰒓",
         "tooltip-format": "Einstellungen",
         "on-click": "~/.config/hypr/settings.sh",
-        "on-click-right": "aco-theme menu"
+        "on-click-right": "~/.config/hypr/settings.sh appearance"
     }
 }
