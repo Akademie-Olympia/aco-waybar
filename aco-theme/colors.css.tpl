@@ -29,6 +29,7 @@ tooltip {
 #wireplumber,
 #battery,
 #clock,
+#custom-notification,
 #custom-settings,
 menuitem {
     border-radius: {{radius_small}}px;

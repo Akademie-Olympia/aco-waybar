@@ -11,7 +11,7 @@
 
     "modules-left": ["custom/logo", "hyprland/window"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["tray", "network", "wireplumber", "battery", "clock", "custom/settings"],
+    "modules-right": ["tray", "network", "wireplumber", "battery", "clock", "custom/notification", "custom/settings"],
 
     "custom/logo": {
         "format": "",
@@ -94,6 +94,27 @@
         "format": "{:%d.%m.  %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "interval": 15
+    },
+
+    "custom/notification": {
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󰂚",
+            "none": "󰂜",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚",
+            "inhibited-none": "󰂜",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰂛"
+        },
+        "tooltip-format": "Mitteilungen (Rechtsklick: Nicht stören)",
+        "return-type": "json",
+        "exec-if": "command -v swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     },
 
     "custom/settings": {
