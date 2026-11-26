@@ -1,5 +1,7 @@
 /* ============================================================================
- * WAYBAR - ACO top bar
+ * WAYBAR - ACO top bar, in the spirit of the macOS menu bar
+ * One colour (@fg) for every symbol and text, light or dark to suit the
+ * wallpaper; no pills or frames, only a soft highlight under the pointer.
  * Colours, font and rounding come from aco-theme
  * (~/.config/aco/theme/waybar/colors.css); this file only holds layout.
  * ============================================================================ */
@@ -14,14 +16,16 @@
     font-size: 13px;
     font-weight: 500;
     box-shadow: none;
-    text-shadow: none;
 }
 
-/* With transparency on the bar has no background at all and the modules float
- * over the wallpaper; with transparency off it is a solid strip. */
 window#waybar {
     background-color: @bar;
-    color: @text;
+    color: @fg;
+}
+
+/* A faint glow in the tint colour keeps text readable on busy wallpapers. */
+window#waybar label {
+    text-shadow: 0 0 4px alpha(@tint, 0.35);
 }
 
 tooltip {
@@ -30,12 +34,33 @@ tooltip {
 }
 
 tooltip label {
-    color: @text;
+    color: @menu_text;
     padding: 4px 6px;
+    text-shadow: none;
 }
 
-/* Every module is a quiet pill that only lights up on hover. */
-#window,
+/* --- Modules --------------------------------------------------------------- */
+
+.module {
+    margin: 4px 1px;
+    padding: 0 9px;
+    color: @fg;
+    transition: background-color 120ms ease-out;
+}
+
+.module:hover {
+    background-color: alpha(@fg, 0.14);
+}
+
+#window {
+    font-weight: 700;
+    padding-left: 4px;
+}
+
+window#waybar.empty #window {
+    background: none;
+}
+
 #tray,
 #privacy,
 #bluetooth,
@@ -43,30 +68,13 @@ tooltip label {
 #wireplumber,
 #backlight,
 #battery,
-#clock,
+#custom-notifications,
 #custom-control-centre {
-    margin: 4px 2px;
-    padding: 0 9px;
-    color: @text;
-    transition: background-color 120ms ease-out;
+    font-size: 15px;
 }
 
-#bluetooth:hover,
-#network:hover,
-#wireplumber:hover,
-#backlight:hover,
-#battery:hover,
-#clock:hover,
-#custom-control-centre:hover {
-    background-color: @hover;
-}
-
-#window {
-    font-weight: 700;
-}
-
-window#waybar.empty #window {
-    background: none;
+#battery {
+    font-size: 13px;
 }
 
 #clock {
@@ -75,25 +83,37 @@ window#waybar.empty #window {
 }
 
 #custom-control-centre {
-    margin-right: 6px;
-    font-size: 14px;
+    margin-right: 8px;
 }
 
-#privacy {
-    padding: 0 4px;
-}
-
-/* Mic or screen in use: an orange dot, like other systems do. */
+/* Mic or screen in use: an orange dot, as macOS does. */
 #privacy-item {
     padding: 0 3px;
     color: @orange;
 }
 
-/* Workspaces: one ring per workspace of this monitor. The workspace shown on
- * this monitor is filled; with the accent when the monitor has the focus,
- * grey on the other monitors. Rings with windows are drawn stronger. */
+/* Quiet states are simply fainter; only real warnings get a colour. */
+#wireplumber.muted,
+#network.disconnected,
+#custom-notifications.dnd-none,
+#custom-notifications.dnd-notification {
+    color: alpha(@fg, 0.5);
+}
+
+#battery.warning:not(.charging) {
+    color: @yellow;
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+}
+
+/* --- Workspaces -------------------------------------------------------------
+ * One ring per workspace of this monitor. The one on screen is filled: fully
+ * on the focused monitor, half on the others. Rings with windows are drawn
+ * stronger than empty ones. */
 #workspaces {
-    margin: 0 6px 0 10px;
+    margin: 0 6px 0 12px;
 }
 
 #workspaces button {
@@ -101,7 +121,7 @@ window#waybar.empty #window {
     min-height: 7px;
     margin: 11px 4px;
     padding: 0;
-    border: 1.5px solid @ring;
+    border: 1.5px solid alpha(@fg, 0.45);
     border-radius: 50%;
     background-color: transparent;
     transition: background-color 160ms ease-out, border-color 160ms ease-out;
@@ -121,21 +141,21 @@ window#waybar.empty #window {
 }
 
 #workspaces button:not(.empty) {
-    border-color: @subtext;
+    border-color: alpha(@fg, 0.9);
 }
 
 #workspaces button:hover {
-    border-color: @text;
+    border-color: @fg;
 }
 
 #workspaces button.visible {
-    border-color: @subtext;
-    background-color: @subtext;
+    border-color: alpha(@fg, 0.55);
+    background-color: alpha(@fg, 0.55);
 }
 
 #workspaces button.active {
-    border-color: @accent;
-    background-color: @accent;
+    border-color: @fg;
+    background-color: @fg;
 }
 
 #workspaces button.urgent {
@@ -143,45 +163,19 @@ window#waybar.empty #window {
     background-color: @red;
 }
 
-/* A dot of accent when something is waiting; muted while "Nicht stören" is on. */
-#custom-control-centre.notification,
-#custom-control-centre.inhibited-notification {
-    color: @accent;
-}
-
-#custom-control-centre.dnd-none,
-#custom-control-centre.dnd-notification,
-#custom-control-centre.dnd-inhibited-none,
-#custom-control-centre.dnd-inhibited-notification,
-#wireplumber.muted,
-#network.disconnected {
-    color: @muted;
-}
-
-#battery.charging,
-#battery.plugged {
-    color: @green;
-}
-
-#battery.warning:not(.charging) {
-    color: @yellow;
-}
-
-#battery.critical:not(.charging) {
-    color: @red;
-}
+/* --- Menus (tray) ------------------------------------------------------------ */
 
 #tray menu,
 menu {
     background-color: @menu;
-    color: @text;
+    color: @menu_text;
     border: 1px solid @line;
     padding: 5px;
 }
 
 menuitem {
     padding: 6px 12px;
-    color: @text;
+    color: @menu_text;
 }
 
 menuitem:hover {
