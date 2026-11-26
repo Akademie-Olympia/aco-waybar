@@ -17,10 +17,11 @@
     text-shadow: none;
 }
 
+/* With transparency on the bar has no background at all and the modules float
+ * over the wallpaper; with transparency off it is a solid strip. */
 window#waybar {
     background-color: @bar;
     color: @text;
-    border-bottom: 1px solid @line;
 }
 
 tooltip {
@@ -34,35 +35,30 @@ tooltip label {
 }
 
 /* Every module is a quiet pill that only lights up on hover. */
-#custom-logo,
 #window,
 #tray,
+#privacy,
+#bluetooth,
 #network,
 #wireplumber,
+#backlight,
 #battery,
 #clock,
-#custom-notification,
-#custom-settings {
+#custom-control-centre {
     margin: 4px 2px;
     padding: 0 9px;
     color: @text;
     transition: background-color 120ms ease-out;
 }
 
-#custom-logo:hover,
+#bluetooth:hover,
 #network:hover,
 #wireplumber:hover,
+#backlight:hover,
 #battery:hover,
 #clock:hover,
-#custom-notification:hover,
-#custom-settings:hover {
+#custom-control-centre:hover {
     background-color: @hover;
-}
-
-#custom-logo {
-    margin-left: 6px;
-    padding: 0 11px 0 9px;
-    font-size: 15px;
 }
 
 #window {
@@ -78,54 +74,85 @@ window#waybar.empty #window {
     font-feature-settings: "tnum";
 }
 
-#custom-settings {
+#custom-control-centre {
     margin-right: 6px;
     font-size: 14px;
 }
 
-/* Workspaces: small dots, the active one stretches into an accent pill. */
+#privacy {
+    padding: 0 4px;
+}
+
+/* Mic or screen in use: an orange dot, like other systems do. */
+#privacy-item {
+    padding: 0 3px;
+    color: @orange;
+}
+
+/* Workspaces: one ring per workspace of this monitor. The workspace shown on
+ * this monitor is filled; with the accent when the monitor has the focus,
+ * grey on the other monitors. Rings with windows are drawn stronger. */
 #workspaces {
-    margin: 0 4px;
+    margin: 0 6px 0 10px;
 }
 
 #workspaces button {
     min-width: 7px;
     min-height: 7px;
-    margin: 12px 3px;
+    margin: 11px 4px;
     padding: 0;
-    border-radius: 4px;
-    background-color: @pill;
-    transition: min-width 160ms ease-out, background-color 160ms ease-out;
+    border: 1.5px solid @ring;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out;
 }
 
-/* The label is empty; without this its line height would stretch the dot. */
+/* The label is empty; hide it so its line box cannot stretch the ring. */
 #workspaces button label {
     font-size: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+#workspaces button box {
+    min-height: 0;
+}
+
+#workspaces button:not(.empty) {
+    border-color: @subtext;
 }
 
 #workspaces button:hover {
+    border-color: @text;
+}
+
+#workspaces button.visible {
+    border-color: @subtext;
     background-color: @subtext;
 }
 
 #workspaces button.active {
-    min-width: 22px;
+    border-color: @accent;
     background-color: @accent;
 }
 
 #workspaces button.urgent {
+    border-color: @red;
     background-color: @red;
 }
 
 /* A dot of accent when something is waiting; muted while "Nicht stören" is on. */
-#custom-notification.notification,
-#custom-notification.inhibited-notification {
+#custom-control-centre.notification,
+#custom-control-centre.inhibited-notification {
     color: @accent;
 }
 
-#custom-notification.dnd-none,
-#custom-notification.dnd-notification,
-#custom-notification.dnd-inhibited-none,
-#custom-notification.dnd-inhibited-notification,
+#custom-control-centre.dnd-none,
+#custom-control-centre.dnd-notification,
+#custom-control-centre.dnd-inhibited-none,
+#custom-control-centre.dnd-inhibited-notification,
 #wireplumber.muted,
 #network.disconnected {
     color: @muted;
