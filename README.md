@@ -2,6 +2,10 @@
 
 Wayland panel with workspaces, clock, volume, battery and a power menu.
 
+Workspaces are circles: one per workspace of the monitor the bar sits on, the one on screen filled (accent on the
+focused monitor, grey elsewhere). Clicking a circle switches to it, scrolling over them steps through the monitor's
+workspaces. Grouping per monitor and the "all monitors" mode come from `workspaces.lua` in aco-hypr.
+
 **[Documentation](https://aco-docs.readthedocs.io/en/latest/waybar/)** ·
 [Guide](https://aco-docs.readthedocs.io/en/latest/waybar/guide/) ·
 [Design & dependencies](https://aco-docs.readthedocs.io/en/latest/waybar/design/) ·

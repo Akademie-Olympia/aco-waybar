@@ -46,11 +46,14 @@
         }
     },
 
+    // One circle per workspace of this monitor; groups and the "all monitors"
+    // mode live in ~/.config/hypr/workspaces.lua, scrolling stays inside the group.
     "hyprland/workspaces": {
         "format": "",
         "all-outputs": false,
-        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"r-1\" })'",
-        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"r+1\" })'"
+        "show-special": false,
+        "on-scroll-up": "hyprctl eval 'aco_workspaces.step(-1)'",
+        "on-scroll-down": "hyprctl eval 'aco_workspaces.step(1)'"
     },
 
     "tray": {
