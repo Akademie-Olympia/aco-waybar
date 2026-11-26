@@ -1,6 +1,7 @@
 // ============================================================================
 // WAYBAR - ACO top bar
-// Left: system menu and the focused app. Centre: workspaces. Right: status.
+// Left: workspace circles and the focused app. Right: status icons that only
+// appear when they matter, the clock and the control centre.
 // Layout only; colours and fonts come from aco-theme via style.css.
 // ============================================================================
 {
@@ -9,26 +10,8 @@
     "height": 32,
     "spacing": 0,
 
-    "modules-left": ["custom/logo", "hyprland/window"],
-    "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["tray", "network", "wireplumber", "battery", "clock", "custom/notification", "custom/settings"],
-
-    "custom/logo": {
-        "format": "",
-        "tooltip-format": "System (Rechtsklick: Programme)",
-        "menu": "on-click",
-        "menu-file": "~/.config/waybar/power_menu.xml",
-        "menu-actions": {
-            "settings": "~/.config/hypr/settings.sh",
-            "appearance": "~/.config/hypr/settings.sh appearance",
-            "lock": "hyprlock",
-            "logout": "hyprctl dispatch 'hl.dsp.exit()'",
-            "suspend": "systemctl suspend",
-            "reboot": "systemctl reboot",
-            "shutdown": "systemctl poweroff"
-        },
-        "on-click-right": "aco-menu apps"
-    },
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-right": ["tray", "privacy", "bluetooth", "network", "wireplumber", "backlight", "battery", "clock", "custom/control-centre"],
 
     "hyprland/window": {
         "format": "{class}",
@@ -69,7 +52,7 @@
         "tooltip-format-wifi": "{essid} · {signalStrength}%",
         "tooltip-format-ethernet": "{ifname} · {ipaddr}",
         "tooltip-format-disconnected": "Nicht verbunden",
-        "on-click": "kitty -e nmtui"
+        "on-click": "~/.config/hypr/settings.sh wifi"
     },
 
     "wireplumber": {
@@ -78,6 +61,7 @@
         "format-icons": ["󰕿", "󰖀", "󰕾"],
         "tooltip-format": "Lautstärke {volume}%",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "~/.config/hypr/settings.sh sound",
         "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-",
         "max-volume": 100
@@ -90,40 +74,65 @@
         "format-charging": "󰂄  {capacity}%",
         "format-plugged": "󰚥  {capacity}%",
         "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰂂", "󰁹"],
-        "tooltip-format": "{timeTo} · {power:.1f} W"
+        "tooltip-format": "{timeTo} · {power:.1f} W",
+        "on-click": "~/.config/hypr/settings.sh power"
+    },
+
+    // Laptop screens only; hidden when there is no backlight device.
+    "backlight": {
+        "format": "{icon}",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "tooltip-format": "Helligkeit {percent}%",
+        "on-scroll-up": "brightnessctl -e4 -n2 set 2%+",
+        "on-scroll-down": "brightnessctl -e4 -n2 set 2%-"
+    },
+
+    // Only visible while a device is connected.
+    "bluetooth": {
+        "format": "",
+        "format-connected": "󰂱",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "~/.config/hypr/settings.sh bluetooth"
+    },
+
+    // Shows a dot while the microphone or screen sharing is in use.
+    "privacy": {
+        "icon-size": 13,
+        "icon-spacing": 6,
+        "transition-duration": 200,
+        "modules": [
+            { "type": "audio-in", "tooltip": true },
+            { "type": "screenshare", "tooltip": true }
+        ]
     },
 
     "clock": {
-        "format": "{:%d.%m.  %H:%M}",
+        // Day and month names follow the system locale (LC_TIME).
+        "format": "{:%a %d. %b  %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
-        "interval": 15
+        "interval": 15,
+        "on-click": "swaync-client -t -sw"
     },
 
-    "custom/notification": {
+    "custom/control-centre": {
         "format": "{icon}",
         "format-icons": {
             "notification": "󰂚",
-            "none": "󰂜",
+            "none": "󰕮",
             "dnd-notification": "󰂛",
             "dnd-none": "󰂛",
             "inhibited-notification": "󰂚",
-            "inhibited-none": "󰂜",
+            "inhibited-none": "󰕮",
             "dnd-inhibited-notification": "󰂛",
             "dnd-inhibited-none": "󰂛"
         },
-        "tooltip-format": "Mitteilungen (Rechtsklick: Nicht stören)",
+        "tooltip-format": "Kontrollzentrum (Rechtsklick: Nicht stören)",
         "return-type": "json",
         "exec-if": "command -v swaync-client",
         "exec": "swaync-client -swb",
         "on-click": "swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",
         "escape": true
-    },
-
-    "custom/settings": {
-        "format": "󰒓",
-        "tooltip-format": "Einstellungen",
-        "on-click": "~/.config/hypr/settings.sh",
-        "on-click-right": "~/.config/hypr/settings.sh appearance"
     }
 }
