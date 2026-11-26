@@ -15,7 +15,7 @@ network, the control centre switch and the clock.
   monitors" mode come from `workspaces.lua` in aco-hypr.
 - **Clicks**: the switch icon opens the control centre, the clock and the bell the notification centre (aco-swaync);
   the battery opens the energy menu (charge, time left, power draw, battery health, busy apps, energy modes); network,
-  Bluetooth and a right click on the volume open their page in the settings hub.
+  Bluetooth and a right click on the volume open their page in the settings app (aco-settings).
 
 **[Documentation](https://aco-docs.readthedocs.io/en/latest/waybar/)** ·
 [Guide](https://aco-docs.readthedocs.io/en/latest/waybar/guide/) ·
