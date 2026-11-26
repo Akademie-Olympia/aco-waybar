@@ -1,148 +1,157 @@
 /* ============================================================================
- * WAYBAR STYLE - Official Catppuccin Mocha (Pastel Theme)
- * Palette:
- *   Crust:      #11111b
- *   Mantle:     #181825
- *   Base:       #1e1e2e
- *   Surface0:   #313244
- *   Surface1:   #45475a
- *   Overlay0:   #6c7086
- *   Text:       #cdd6f4
- *   Blue:       #89b4fa
- *   Sapphire:   #74c7ec
- *   Teal:       #94e2d5
- *   Green:      #a6e3a1
- *   Mauve:      #cba6f7
- *   Peach:      #fab387
- *   Red:        #f38ba8
+ * WAYBAR - ACO top bar
+ * Colours, font and rounding come from aco-theme
+ * (~/.config/aco/theme/waybar/colors.css); this file only holds layout.
  * ============================================================================ */
+@import url("../aco/theme/waybar/colors.css");
 
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrainsMonoNL Nerd Font", "Noto Sans", monospace;
-    font-size: 12px;
-    font-weight: 500;
     min-height: 0;
     margin: 0;
     padding: 0;
-}
-
-window#waybar {
-    background-color: #1e1e2e;
-    color: #cdd6f4;
-    border-bottom: 1px solid #313244;
-}
-
-#workspaces {
-    background-color: #1e1e2e;
-}
-
-#workspaces button {
-    padding: 0 10px;
-    background-color: transparent;
-    color: #6c7086;
-    border-bottom: 2px solid transparent;
-    transition: none;
-}
-
-#workspaces button:hover {
-    background-color: #313244;
-    color: #cdd6f4;
+    font-size: 13px;
+    font-weight: 500;
     box-shadow: none;
     text-shadow: none;
 }
 
-#workspaces button.active {
-    background-color: #313244;
-    color: #89b4fa;
-    font-weight: 700;
-    border-bottom: 2px solid #89b4fa;
+window#waybar {
+    background-color: @bar;
+    color: @text;
+    border-bottom: 1px solid @line;
 }
 
-#workspaces button.urgent {
-    background-color: #f38ba8;
-    color: #11111b;
+tooltip {
+    background-color: @menu;
+    border: 1px solid @line;
+}
+
+tooltip label {
+    color: @text;
+    padding: 4px 6px;
+}
+
+/* Every module is a quiet pill that only lights up on hover. */
+#custom-logo,
+#window,
+#tray,
+#network,
+#wireplumber,
+#battery,
+#clock,
+#custom-settings {
+    margin: 4px 2px;
+    padding: 0 9px;
+    color: @text;
+    transition: background-color 120ms ease-out;
+}
+
+#custom-logo:hover,
+#network:hover,
+#wireplumber:hover,
+#battery:hover,
+#clock:hover,
+#custom-settings:hover {
+    background-color: @hover;
+}
+
+#custom-logo {
+    margin-left: 6px;
+    padding: 0 11px 0 9px;
+    font-size: 15px;
+}
+
+#window {
     font-weight: 700;
+}
+
+window#waybar.empty #window {
+    background: none;
 }
 
 #clock {
-    padding: 0 14px;
-    color: #cdd6f4;
-    font-weight: 600;
+    margin-right: 2px;
+    font-feature-settings: "tnum";
 }
 
-#wireplumber,
-#battery,
-#custom-power {
-    padding: 0 12px;
-    background-color: #181825;
-    color: #cdd6f4;
-    border-left: 1px solid #313244;
+#custom-settings {
+    margin-right: 6px;
+    font-size: 14px;
 }
 
-#wireplumber {
-    color: #74c7ec;
+/* Workspaces: small dots, the active one stretches into an accent pill. */
+#workspaces {
+    margin: 0 4px;
 }
 
-#wireplumber.muted {
-    color: #6c7086;
-    background-color: #1e1e2e;
+#workspaces button {
+    min-width: 7px;
+    min-height: 7px;
+    margin: 12px 3px;
+    padding: 0;
+    border-radius: 4px;
+    background-color: @pill;
+    transition: min-width 160ms ease-out, background-color 160ms ease-out;
 }
 
-#battery {
-    color: #94e2d5;
+/* The label is empty; without this its line height would stretch the dot. */
+#workspaces button label {
+    font-size: 0;
+}
+
+#workspaces button:hover {
+    background-color: @subtext;
+}
+
+#workspaces button.active {
+    min-width: 22px;
+    background-color: @accent;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+}
+
+#wireplumber.muted,
+#network.disconnected {
+    color: @muted;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: #a6e3a1;
+    color: @green;
 }
 
 #battery.warning:not(.charging) {
-    color: #fab387;
+    color: @yellow;
 }
 
 #battery.critical:not(.charging) {
-    background-color: #f38ba8;
-    color: #11111b;
-    font-weight: 700;
+    color: @red;
 }
 
-#custom-power {
-    padding: 0 14px;
-    background-color: #181825;
-    color: #94e2d5;
-    font-weight: 700;
-}
-
-#custom-power:hover {
-    background-color: #313244;
-    color: #89b4fa;
-}
-
-/* Dropdown-Menü rechts oben (Power-Menü) */
+#tray menu,
 menu {
-    background-color: #1e1e2e;
-    color: #cdd6f4;
-    border: 1px solid #89b4fa;
-    border-radius: 0;
-    padding: 4px 0;
+    background-color: @menu;
+    color: @text;
+    border: 1px solid @line;
+    padding: 5px;
 }
 
 menuitem {
-    padding: 6px 14px;
-    color: #cdd6f4;
-    background-color: transparent;
+    padding: 6px 12px;
+    color: @text;
 }
 
 menuitem:hover {
-    background-color: #313244;
-    color: #89b4fa;
+    background-color: @accent;
+    color: @on_accent;
 }
 
-separator {
-    background-color: #313244;
+menu separator {
     min-height: 1px;
-    margin: 4px 0;
+    margin: 4px 8px;
+    background-color: @line;
 }
