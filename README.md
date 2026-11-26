@@ -1,7 +1,8 @@
 # Waybar configuration
 
 A quiet top bar in the spirit of the macOS menu bar: one colour for every symbol, no frames, only what matters.
-Left: workspace circles and the focused app. Right: tray, an orange dot while the microphone or screen sharing is in
+Left: the Arch logo (system menu: about, settings, apps, update, lock, log out, sleep, restart, power off),
+workspace circles and the focused app. Right: tray, an orange dot while the microphone or screen sharing is in
 use, a bell only while notifications wait, Bluetooth while connected, volume, brightness and battery on laptops,
 network, the control centre switch and the clock.
 
@@ -13,7 +14,8 @@ network, the control centre switch and the clock.
   the focused monitor, half on the others). Click to switch, scroll to step. Grouping per monitor and the "all
   monitors" mode come from `workspaces.lua` in aco-hypr.
 - **Clicks**: the switch icon opens the control centre, the clock and the bell the notification centre (aco-swaync);
-  network, Bluetooth, battery and a right click on the volume open their page in the settings hub.
+  the battery opens the energy menu (charge, time left, power draw, battery health, busy apps, energy modes); network,
+  Bluetooth and a right click on the volume open their page in the settings hub.
 
 **[Documentation](https://aco-docs.readthedocs.io/en/latest/waybar/)** ·
 [Guide](https://aco-docs.readthedocs.io/en/latest/waybar/guide/) ·

@@ -1,6 +1,7 @@
 // ============================================================================
 // WAYBAR - ACO top bar
-// Like the macOS menu bar. Left: workspace circles and the focused app.
+// Like the macOS menu bar. Left: the Arch logo (system menu), workspace circles
+// and the focused app.
 // Right: status symbols that only appear when they matter, the clock (opens
 // the notification centre) and the control centre.
 // Layout only; colours and fonts come from aco-theme via style.css.
@@ -11,7 +12,7 @@
     "height": 32,
     "spacing": 0,
 
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-left": ["custom/arch", "hyprland/workspaces", "hyprland/window"],
     "modules-right": ["tray", "privacy", "custom/notifications", "bluetooth", "wireplumber", "backlight", "battery", "network", "custom/control-centre", "clock"],
 
     "hyprland/window": {
@@ -28,6 +29,13 @@
             "pcmanfm": "Dateien",
             "com.gabm.satty": "Screenshot"
         }
+    },
+
+    // System menu like the Apple menu: about, settings, apps, update, lock, power.
+    "custom/arch": {
+        "format": "\uf303",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/systemmenu.sh"
     },
 
     // One circle per workspace of this monitor; groups and the "all monitors"
@@ -76,7 +84,7 @@
         "format-plugged": "󰚥  {capacity}%",
         "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰂂", "󰁹"],
         "tooltip-format": "{timeTo} · {power:.1f} W",
-        "on-click": "~/.config/hypr/settings.sh power"
+        "on-click": "ACO_MENU_DROPDOWN=right ~/.config/hypr/settings.sh power"
     },
 
     // Laptop screens only; hidden when there is no backlight device.
