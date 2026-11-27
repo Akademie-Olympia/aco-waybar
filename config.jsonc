@@ -35,6 +35,7 @@
             "org.aco.Images": "Bilder",
             "org.aco.Pdf": "PDF",
             "org.aco.Edit": "Editor",
+            "org.aco.Files": "Dateien",
             "com.gabm.satty": "Screenshot"
         }
     },
