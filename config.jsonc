@@ -30,6 +30,11 @@
             "io.github.celluloid_player.Celluloid": "Celluloid",
             "io.bassi.Amberol": "Musik",
             "org.aco.Settings": "Einstellungen",
+            "org.aco.Music": "Musik",
+            "org.aco.Video": "Video",
+            "org.aco.Images": "Bilder",
+            "org.aco.Pdf": "PDF",
+            "org.aco.Edit": "Editor",
             "com.gabm.satty": "Screenshot"
         }
     },
